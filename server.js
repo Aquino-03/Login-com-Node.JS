@@ -6,7 +6,9 @@ const app = express()
 
 app.use(express.json())
 
-app.use('/cadastro', publicRoutes)
+app.use(express.static('public'));
+
+app.use('/', publicRoutes)
 
 app.listen(3000, () => console.log("Servidor Rodando"))
 
