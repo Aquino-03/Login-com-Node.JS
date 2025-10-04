@@ -28,4 +28,4 @@ async function testConnection()
 }
 
 export default pool
-export { testConnection }
+export {pool, testConnection}
