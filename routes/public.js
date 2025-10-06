@@ -56,9 +56,9 @@ router.post('/login', async (req, res) => {
 
  router.post('/cadastro', async (req,res) => {
         try{
-        const {username, senha1, senha2} = req.body
+        const {username1, username2, senha1, senha2} = req.body
 
-        if (!username || !senha1 || !senha2){
+        if (!username1 || !username2 || !senha1 || !senha2){
             return res.status(400).json({mensagem: 'Email e senha são obrigatórios.'})
         }
 
@@ -66,11 +66,15 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({mensagem: 'As senhas estão diferentes.'})
         }
 
+        if(username1 != username2){
+            return res.status(400).json({mensagem: 'Os endereços de E-mail estão diferentes.'})
+        }
+
         const saltRounds = 10
         const senha_hash = await bcrypt.hash(senha1, saltRounds)
 
         const sql = "INSERT INTO usuarios (username, senha_hash) VALUES (?,?)"
-        const values = [username, senha_hash]
+        const values = [username1, senha_hash]
 
         const [result] = await db.execute(sql, values)
 
